@@ -62,7 +62,7 @@ Method ini akan tetap mengembalikan struktur response mentah, namun akan dibungk
 
 # Dokumentasi Swagger
 
-Swagger untuk dokumentasi otomatis API dan dapat diakses pada: http://localhost:3000/api
+Swagger untuk dokumentasi API dan dapat diakses pada: http://localhost:3000/api
 
 ---
 
