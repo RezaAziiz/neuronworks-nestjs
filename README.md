@@ -61,4 +61,4 @@ Sebagai contoh, endpoint /register user dapat ditemukan pada:
 Method ini akan tetap mengembalikan struktur response mentah, namun akan dibungkus oleh `ResponseInterceptor` sehingga client menerima format yang telah distandarisasi.
 
 
-
+![Contoh Response](docs/images/response-example.png)
