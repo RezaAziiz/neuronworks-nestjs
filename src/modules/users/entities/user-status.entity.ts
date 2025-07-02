@@ -1,7 +1,7 @@
 
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
-@Entity('user_status') // <-- Pastikan nama tabel ini sesuai di database kamu
+@Entity('user_status') 
 export class Status {
     @PrimaryGeneratedColumn()
     id: number;

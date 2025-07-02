@@ -17,12 +17,12 @@ export class ResponseInterceptor<T> implements NestInterceptor<T, any> {
 
     return next.handle().pipe(
       map((data) => {
-        // Jika data null/undefined (misal untuk status 204 No Content)
+  
         if (data === undefined || data === null) {
           return data;
         }
 
-        // Jika controller sudah mengembalikan error response, biarkan saja
+    
         if (statusCode >= HttpStatus.BAD_REQUEST) { // Jika status code adalah error
             return data; 
         }

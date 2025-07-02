@@ -1,8 +1,7 @@
 
 import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, ManyToOne } from 'typeorm';
-import { Status } from './user-status.entity' // Nama class entitasnya 'Status', bukan 'UserStatus'
-
-@Entity('users') // Pastikan nama tabel di DB adalah 'users'
+import { Status } from './user-status.entity' 
+@Entity('users') 
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -16,7 +15,7 @@ export class User {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   register_date: Date;
 
-  @ManyToOne(() => Status, { eager: true }) // <-- TAMBAHKAN eager: true DI SINI
-  @JoinColumn({ name: 'status_id' }) // Jika kolom di tabel User adalah status_id
+  @ManyToOne(() => Status, { eager: true }) 
+  @JoinColumn({ name: 'status_id' }) 
   status: Status;
 }
