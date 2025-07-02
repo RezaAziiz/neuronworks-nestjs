@@ -60,9 +60,9 @@ Sebagai contoh, endpoint /register user dapat ditemukan pada:
 
 Method ini akan tetap mengembalikan struktur response mentah, namun akan dibungkus oleh `ResponseInterceptor` sehingga client menerima format yang telah distandarisasi.
 
-#Dokumentasi Swagger
+# Dokumentasi Swagger
 
-Swagger telah diaktifkan untuk dokumentasi otomatis API dan dapat diakses pada: http://localhost:3000/api
+Swagger untuk dokumentasi otomatis API dan dapat diakses pada: http://localhost:3000/api
 
 ---
 
