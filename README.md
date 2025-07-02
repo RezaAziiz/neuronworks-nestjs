@@ -60,5 +60,41 @@ Sebagai contoh, endpoint /register user dapat ditemukan pada:
 
 Method ini akan tetap mengembalikan struktur response mentah, namun akan dibungkus oleh `ResponseInterceptor` sehingga client menerima format yang telah distandarisasi.
 
+## Dokumentasi Swagger
+
+Swagger telah diaktifkan untuk dokumentasi otomatis API dan dapat diakses pada: http://localhost:3000/api
+
+---
+
+## Contoh Endpoint Lain
+
+Berikut beberapa endpoint yang juga mengikuti standar response:
+
+- **GET** `/users`  
+  Mengambil seluruh data user
+
+- **GET** `/users/:id`  
+  Mengambil satu user berdasarkan ID
+
+- **POST** `/users`  
+  Menambahkan user baru
+
+- **PUT** `/users/:id`  
+  Memperbarui data user berdasarkan ID
+
+- **DELETE** `/users/:id`  
+  Menghapus user berdasarkan ID
+
+---
+
+## Catatan
+
+- Semua response endpoint akan mengikuti format standar:  
+  ```json
+  {
+    "status": true,
+    "message": "Data retrieved successfully",
+    "data": { ... }
+  }
 
 ![Contoh Response](docs/images/response-example.png)
