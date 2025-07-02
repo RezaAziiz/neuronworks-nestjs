@@ -1,103 +1,64 @@
-<<<<<<< HEAD
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Standarisasi Response API di NestJS
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Dokumentasi ini menjelaskan pendekatan standarisasi response API menggunakan helper dalam eksplorasi NestJS.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Pendekatan Helper
 
-## Description
+NestJS mendukung berbagai pendekatan untuk membuat helper. Dalam konteks standarisasi response API, terdapat dua pendekatan utama:
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+1. Helper Function  
+2. Interceptor
 
-## Project setup
+Proyek ini menggunakan pendekatan interceptor karena sifatnya yang terintegrasi dengan lifecycle NestJS dan penerapan secara global tanpa perlu dipanggil manual di setiap controller.
 
-```bash
-$ npm install
-```
+## Struktur Response
 
-## Compile and run the project
+Struktur response yang digunakan terdiri dari tiga properti utama:
 
-```bash
-# development
-$ npm run start
+- `status`  
+- `message`  
+- `data`
 
-# watch mode
-$ npm run start:dev
+Nilai `message` akan disesuaikan berdasarkan metode HTTP yang digunakan (`GET`, `POST`, `PUT`, `DELETE`).
 
-# production mode
-$ npm run start:prod
-```
+## Lokasi dan Implementasi Interceptor
 
-## Run tests
+Implementasi interceptor dapat ditemukan di:
 
-```bash
-# unit tests
-$ npm run test
+**File:**  
+`src/common/interceptors/response.interceptor.ts`
 
-# e2e tests
-$ npm run test:e2e
+**Class:**  
+`ResponseInterceptor`
 
-# test coverage
-$ npm run test:cov
-```
+**Method:**  
+`intercept(context: ExecutionContext, next: CallHandler)`
 
-## Deployment
+Interceptor ini membaca metode HTTP dari objek request dan menyesuaikan pesan yang dikembalikan sesuai kebutuhan. Jika response mengandung error (status code 400 ke atas), maka response tersebut tidak dimodifikasi.
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+## Penggunaan Interceptor Secara Global
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+Agar interceptor bekerja untuk semua endpoint, maka perlu didaftarkan secara global di file:
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+**File:**  
+`src/main.ts`
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+**Fungsi:**  
+`bootstrap()`
 
-## Resources
+Di dalam fungsi ini, instance dari `ResponseInterceptor` didaftarkan menggunakan method `useGlobalInterceptors`.
 
-Check out a few resources that may come in handy when working with NestJS:
+## Contoh Penggunaan di Endpoint
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+Sebagai contoh, endpoint /register user dapat ditemukan pada:
 
-## Support
+**File:**  
+`src/modules/auth/auth.controller.ts`
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+**Method:**  
+`register(@Body() dto: RegisterAuthDto)`
 
-## Stay in touch
+Method ini akan tetap mengembalikan struktur response mentah, namun akan dibungkus oleh `ResponseInterceptor` sehingga client menerima format yang telah distandarisasi.
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
-## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
-=======
-# neuronworks-nestjs
-This repo is for learning and exploring backend development with NestJS and TypeScript during an internship at Neuronworks. It focuses on grasping fundamental NestJS concepts and building practical API functionalities, aiming to understand best practices for scalable backend applications.
->>>>>>> 2d8b0e2a970cf7ebacb2b568347740a202994543
