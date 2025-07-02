@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
@@ -96,3 +97,7 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+=======
+# neuronworks-nestjs
+This repo is for learning and exploring backend development with NestJS and TypeScript during an internship at Neuronworks. It focuses on grasping fundamental NestJS concepts and building practical API functionalities, aiming to understand best practices for scalable backend applications.
+>>>>>>> 2d8b0e2a970cf7ebacb2b568347740a202994543
